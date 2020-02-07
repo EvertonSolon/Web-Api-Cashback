@@ -18,14 +18,14 @@ namespace Cashback_WebApi.Repositories
             _userManager = userManager;
         }
 
-        public void Create(RevendedoraModel entity)
+        public void Criar(RevendedoraModel revendedora)
         {
-            throw new NotImplementedException();
+            _userManager.CreateAsync(revendedora);
         }
 
-        public void Create(RevendedoraModel user, string password)
+        public void Create(RevendedoraModel revendedora, string senha)
         {
-            var result = _userManager.CreateAsync(user, password).Result;
+            var result = _userManager.CreateAsync(revendedora, senha).Result;
 
             if (result.Succeeded)
                 return;
@@ -41,32 +41,32 @@ namespace Cashback_WebApi.Repositories
 
         }
 
-        public void Delete(RevendedoraModel entity)
+        public void Excluir(RevendedoraModel revendedora)
         {
             throw new NotImplementedException();
         }
 
-        public ICollection<RevendedoraModel> GetAll()
+        public ICollection<RevendedoraModel> ObterTodos()
         {
             throw new NotImplementedException();
         }
 
-        public RevendedoraModel GetEntity(int id)
+        public RevendedoraModel Obter(int id)
         {
             throw new NotImplementedException();
         }
 
-        public RevendedoraModel GetEntity(string email, string password)
+        public RevendedoraModel GetEntity(string email, string senha)
         {
             var revendedora = _userManager.FindByEmailAsync(email).Result;
 
-            if (_userManager.CheckPasswordAsync(revendedora, password).Result)
+            if (_userManager.CheckPasswordAsync(revendedora, senha).Result)
                 return revendedora;
 
             throw new Exception("Revendedora(a) não localizado(a)!");
         }
 
-        public void Update(RevendedoraModel entity)
+        public void Atualizar(RevendedoraModel revendedora)
         {
             throw new NotImplementedException();
         }
