@@ -7,14 +7,14 @@ namespace Cashback_WebApi.Service.Contracts
 {
     public interface ICrudBaseService<TEntity> where TEntity : class
     {
-        TEntity GetEntity(int id);
+        TEntity Obter(int id);
 
-        void Create(TEntity entity);
+        void Criar(TEntity entity);
 
-        void Update(TEntity entity);
+        void Atualizar(TEntity entity);
 
-        void Delete(TEntity entity);
+        void Excluir(TEntity entity);
 
-        ICollection<TEntity> GetAll();
+        ICollection<TEntity> ObterTodos();
     }
 }

@@ -20,33 +20,35 @@ namespace Cashback_WebApi.Service
             _revendedoraRepository = revendedoraRepository;
         }
 
-        public void Create(RevendedoraModel entity)
+        public void Criar(RevendedoraModel revendedora)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(RevendedoraModel entity)
+        public void Excluir(RevendedoraModel revendedora)
         {
             throw new NotImplementedException();
         }
 
-        public ICollection<RevendedoraModel> GetAll()
+        public ICollection<RevendedoraModel> ObterTodos()
         {
             throw new NotImplementedException();
         }
 
-        public RevendedoraModel GetEntity(string email, string password)
+        public RevendedoraModel Obter(string email, string password)
         {
-            var revendedora = _revendedoraRepository.GetEntity(email, password);
+            var revendedora = _revendedoraRepository.Obter(email, password);
 
             return revendedora;        }
 
-        public RevendedoraModel GetEntity(int id)
+        public RevendedoraModel Obter(int id)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(RevendedoraModel entity)
+
+
+        public void Atualizar(RevendedoraModel revendedora)
         {
             throw new NotImplementedException();
         }

@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace Cashback_WebApi.Service.Contracts
 {
-    public interface IRevendedoraService : ICrudBaseService<RevendedoraModel>
+    interface ICashbackService : ICrudBaseService<CashbackModel>
     {
-        RevendedoraModel Obter(string email, string password);
     }
 }

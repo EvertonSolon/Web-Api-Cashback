@@ -3,32 +3,33 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Cashback_WebApi.Service.Contracts;
 
-namespace Cashback_WebApi.Service.Contracts
+namespace Cashback_WebApi.Service
 {
     public class CompraService : ICompraService
     {
-        public void Create(CompraModel compra)
+        public void Criar(CompraModel compra)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(CompraModel compra)
+        public void Excluir(CompraModel compra)
         {
             throw new NotImplementedException();
         }
 
-        public ICollection<CompraModel> GetAll()
+        public ICollection<CompraModel> ObterTodos()
         {
             throw new NotImplementedException();
         }
 
-        public CompraModel GetEntity(int id)
+        public CompraModel Obter(int id)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(CompraModel compra)
+        public void Atualizar(CompraModel compra)
         {
             throw new NotImplementedException();
         }

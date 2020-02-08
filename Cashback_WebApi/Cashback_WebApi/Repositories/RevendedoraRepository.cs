@@ -56,7 +56,7 @@ namespace Cashback_WebApi.Repositories
             throw new NotImplementedException();
         }
 
-        public RevendedoraModel GetEntity(string email, string senha)
+        public RevendedoraModel Obter(string email, string senha)
         {
             var revendedora = _userManager.FindByEmailAsync(email).Result;
 
