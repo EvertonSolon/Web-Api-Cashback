@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Cashback_WebApi.Biblioteca.Constantes
 {
-    public class StatusCompra
+    public class StatusCompraConstante
     {
         public const string EmValidacao = "Em validação";
         public const string Aprovado = "Aprovado";

@@ -20,7 +20,7 @@ namespace Cashback_WebApi.Models
         public DateTime DataCompra { get; set; }
 
         [Required]
-        public StatusCompra Status { get; }
+        public string Status { get; set; }
 
         [ForeignKey("Revendedora")]
         public string CpfRevendedor { get; set; }
