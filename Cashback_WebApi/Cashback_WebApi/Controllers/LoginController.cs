@@ -50,20 +50,20 @@ namespace Cashback_WebApi.Controllers
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["API_Access:ApiKey"]));
             var sign = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            //var expMin = DateTime.Now.AddMinutes(1);
-            var expHour = DateTime.UtcNow.AddHours(1);
+            var exp = DateTime.Now.AddMinutes(1);
+            //var exp = DateTime.UtcNow.AddHours(1);
 
             var token = new JwtSecurityToken(
                 issuer: null,
                 audience: null,
                 claims: claims,
-                expires: expHour,
+                expires: exp,
                 signingCredentials: sign
                 );
 
             var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
 
-            return new { token = tokenString, expiration = expHour };
+            return new { token = tokenString, expiration = exp };
         }
     }
 }

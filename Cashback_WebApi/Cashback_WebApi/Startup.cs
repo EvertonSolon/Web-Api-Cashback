@@ -37,6 +37,7 @@ namespace Cashback_WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Para que "ModelState.Remove(nameof(xptoDto.xpto))" no controller funcione.
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.SuppressModelStateInvalidFilter = true;

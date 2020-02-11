@@ -1,11 +1,6 @@
-﻿using Cashback_WebApi.Biblioteca.Constantes;
-using Cashback_WebApi.Models;
+﻿using Cashback_WebApi.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Cashback_WebApi.Database
 {
