@@ -23,27 +23,16 @@ namespace Cashback_WebApi.Repositories
             _userManager.CreateAsync(revendedora);
         }
 
-        public void Create(RevendedoraModel revendedora, string senha)
+        public IdentityResult Criar(RevendedoraModel revendedora, string senha)
         {
             var result = _userManager.CreateAsync(revendedora, senha).Result;
 
-            if (result.Succeeded)
-                return;
-
-            var stringBuilder = new StringBuilder();
-
-            foreach (var erro in result.Errors)
-            {
-                stringBuilder.Append(erro.Description);
-            }
-
-            throw new Exception($"Revendedora(a) não cadastrado(a)! {stringBuilder.ToString()}");
-
+            return result;
         }
 
         public void Excluir(RevendedoraModel revendedora)
         {
-            throw new NotImplementedException();
+            _userManager.DeleteAsync(revendedora);
         }
 
         public ICollection<RevendedoraModel> ObterTodos()
@@ -63,7 +52,6 @@ namespace Cashback_WebApi.Repositories
             if (_userManager.CheckPasswordAsync(revendedora, senha).Result)
                 return revendedora;
 
-            //throw new Exception("Revendedora(a) não localizado(a)!");
             return null;
         }
 

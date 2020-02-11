@@ -13,23 +13,19 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Cashback_WebApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class RevendedorController : ControllerBase
     {
         private readonly IRevendedoraService _revendedoraService;
-        private readonly SignInManager<RevendedoraModel> _signInManager;
-        private readonly UserManager<RevendedoraModel> _userManager;
 
-        public RevendedorController(IRevendedoraService revendedoraService, SignInManager<RevendedoraModel> signInManager,
-            UserManager<RevendedoraModel> userManager)
+        public RevendedorController(IRevendedoraService revendedoraService)
         {
             _revendedoraService = revendedoraService;
-            _signInManager = signInManager;
-            _userManager = userManager;
         }
 
-        [Authorize]
+        
         // GET: api/Revendedor
         [HttpGet]
         public IEnumerable<string> Get()
@@ -59,21 +55,19 @@ namespace Cashback_WebApi.Controllers
                 UserName = revendedoraDto.Email
             };
 
-            var revendedora = _userManager.CreateAsync(user, revendedoraDto.Senha).Result;
+            var result = _revendedoraService.Criar(user, revendedoraDto.Senha);
 
-            if (revendedora.Succeeded)
+            if (result.Succeeded)
                 return Ok(user);
-
 
             var errors = new List<string>();
 
-            foreach (var erro in revendedora.Errors)
+            foreach (var erro in result.Errors)
             {
                 errors.Add(erro.Description);
             }
 
             return UnprocessableEntity(errors);
-
         }
 
         // PUT: api/Revendedor/5

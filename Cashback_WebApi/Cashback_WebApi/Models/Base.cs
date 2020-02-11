@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Cashback_WebApi.Models
 {
-    public class CrudBase
+    public class Base
     {
         public int Id { get; set; }
 

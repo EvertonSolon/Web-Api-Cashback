@@ -1,4 +1,5 @@
 ﻿using Cashback_WebApi.Models;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ namespace Cashback_WebApi.Repositories.Contracts
 {
     public interface IRevendedoraRepository : ICrudBaseRepository<RevendedoraModel>
     {
-        void Create(RevendedoraModel revendedora, string senha);
+        IdentityResult Criar(RevendedoraModel revendedora, string senha);
         RevendedoraModel Obter(string email, string senha);
     }
 }

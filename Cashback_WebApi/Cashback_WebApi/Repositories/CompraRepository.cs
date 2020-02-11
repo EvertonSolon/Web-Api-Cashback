@@ -19,12 +19,14 @@ namespace Cashback_WebApi.Repositories
 
         public void Criar(CompraModel compra)
         {
-            throw new NotImplementedException();
+            _contexto.Compras.Add(compra);
+            _contexto.SaveChanges();
         }
 
         public void Excluir(CompraModel compra)
         {
-            throw new NotImplementedException();
+            _contexto.Compras.Remove(compra);
+            _contexto.SaveChanges();
         }
 
         public ICollection<CompraModel> ObterTodos()
@@ -34,12 +36,15 @@ namespace Cashback_WebApi.Repositories
 
         public CompraModel Obter(int id)
         {
-            throw new NotImplementedException();
+            var compra = _contexto.Compras.Find(id);
+
+            return compra;
         }
 
         public void Atualizar(CompraModel compra)
         {
-            throw new NotImplementedException();
+            _contexto.Compras.Update(compra);
+            _contexto.SaveChanges();
         }
     }
 }

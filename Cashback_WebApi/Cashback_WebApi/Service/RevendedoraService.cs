@@ -22,12 +22,19 @@ namespace Cashback_WebApi.Service
 
         public void Criar(RevendedoraModel revendedora)
         {
-            throw new NotImplementedException();
+            _revendedoraRepository.Criar(revendedora);
+        }
+
+        public IdentityResult Criar(RevendedoraModel revendedora, string senha)
+        {
+            var result = _revendedoraRepository.Criar(revendedora, senha);
+
+            return result;
         }
 
         public void Excluir(RevendedoraModel revendedora)
         {
-            throw new NotImplementedException();
+            _revendedoraRepository.Excluir(revendedora);
         }
 
         public ICollection<RevendedoraModel> ObterTodos()
@@ -43,14 +50,14 @@ namespace Cashback_WebApi.Service
 
         public RevendedoraModel Obter(int id)
         {
-            throw new NotImplementedException();
+            var revendedora = _revendedoraRepository.Obter(id);
+
+            return revendedora;
         }
-
-
 
         public void Atualizar(RevendedoraModel revendedora)
         {
-            throw new NotImplementedException();
+            _revendedoraRepository.Atualizar(revendedora);
         }
     }
 }

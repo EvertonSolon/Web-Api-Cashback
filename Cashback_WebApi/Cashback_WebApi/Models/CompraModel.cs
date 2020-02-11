@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Cashback_WebApi.Models
 {
-    public class CompraModel : CrudBase
+    public class CompraModel : Base
     {
         [Required]
         public string CodigoCompra { get; set; }
