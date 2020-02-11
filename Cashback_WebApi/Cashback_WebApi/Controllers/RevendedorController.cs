@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Cashback_WebApi.Models;
 using Cashback_WebApi.Repositories.Contracts;
 using Cashback_WebApi.Service.Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -28,23 +29,7 @@ namespace Cashback_WebApi.Controllers
             _userManager = userManager;
         }
 
-        //[HttpGet]
-        //public ActionResult Login([FromBody]LoginModel login)
-        //{
-        //    if (!ModelState.IsValid)
-        //        return UnprocessableEntity(ModelState);
-
-        //    var revendedora = _revendedoraService.Obter(login.Email, login.Senha);
-
-        //    if (revendedora == null)
-        //        return NotFound("Usuário(a) não localizado(a)!");
-
-        //    _signInManager.SignInAsync(revendedora, false);
-
-        //    return Ok();
-
-        //}
-
+        [Authorize]
         // GET: api/Revendedor
         [HttpGet]
         public IEnumerable<string> Get()
@@ -60,22 +45,24 @@ namespace Cashback_WebApi.Controllers
         }
 
         // POST: api/Revendedor
-        [HttpPost]
-        public ActionResult Create([FromBody]LoginDto loginDto)
+        [HttpPost("")]
+        public ActionResult Create([FromBody]RevendedoraDto revendedoraDto)
         {
             if (!ModelState.IsValid)
                 return UnprocessableEntity(ModelState);
 
             var user = new RevendedoraModel
             {
-                NomeCompleto = loginDto.NomeCompleto,
-                Email = loginDto.Email
+                NomeCompleto = revendedoraDto.NomeCompleto,
+                CPF = revendedoraDto.CPF,
+                Email = revendedoraDto.Email,
+                UserName = revendedoraDto.Email
             };
 
-            var revendedora = _userManager.CreateAsync(user, loginDto.Senha).Result;
+            var revendedora = _userManager.CreateAsync(user, revendedoraDto.Senha).Result;
 
             if (revendedora.Succeeded)
-                return Ok(revendedora);
+                return Ok(user);
 
 
             var errors = new List<string>();

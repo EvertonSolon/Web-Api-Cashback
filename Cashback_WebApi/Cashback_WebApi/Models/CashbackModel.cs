@@ -7,7 +7,6 @@ namespace Cashback_WebApi.Models
 {
     public class CashbackModel : CrudBase
     {
-        
         public double Valor { get; set; }
         public int CompraId { get; set; }
     }

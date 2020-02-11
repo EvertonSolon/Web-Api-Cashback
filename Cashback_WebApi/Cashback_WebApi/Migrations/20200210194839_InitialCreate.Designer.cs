@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cashback_WebApi.Migrations
 {
     [DbContext(typeof(CashbackContext))]
-    [Migration("20200207170818_BancoInicial")]
-    partial class BancoInicial
+    [Migration("20200210194839_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -18,39 +18,27 @@ namespace Cashback_WebApi.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
 
-            modelBuilder.Entity("Cashback_WebApi.Models.CashbackModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("CompraId");
-
-                    b.Property<double>("Valor");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Cashbackes");
-                });
-
             modelBuilder.Entity("Cashback_WebApi.Models.CompraModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("CashbackId");
+                    b.Property<double>("Cashback");
 
                     b.Property<string>("CodigoCompra")
                         .IsRequired();
 
                     b.Property<string>("CpfRevendedor");
 
-                    b.Property<DateTime>("Data");
+                    b.Property<DateTime>("CriadoEm");
+
+                    b.Property<DateTime>("DataCompra");
+
+                    b.Property<bool>("Excluido");
 
                     b.Property<double>("Valor");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CashbackId");
 
                     b.HasIndex("CpfRevendedor");
 
@@ -70,10 +58,14 @@ namespace Cashback_WebApi.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
+                    b.Property<DateTime>("CriadoEm");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
+
+                    b.Property<bool>("Excluido");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -176,9 +168,11 @@ namespace Cashback_WebApi.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.Property<string>("LoginProvider");
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(128);
 
-                    b.Property<string>("ProviderKey");
+                    b.Property<string>("ProviderKey")
+                        .HasMaxLength(128);
 
                     b.Property<string>("ProviderDisplayName");
 
@@ -209,9 +203,11 @@ namespace Cashback_WebApi.Migrations
                 {
                     b.Property<string>("UserId");
 
-                    b.Property<string>("LoginProvider");
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(128);
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasMaxLength(128);
 
                     b.Property<string>("Value");
 
@@ -222,11 +218,6 @@ namespace Cashback_WebApi.Migrations
 
             modelBuilder.Entity("Cashback_WebApi.Models.CompraModel", b =>
                 {
-                    b.HasOne("Cashback_WebApi.Models.CashbackModel", "Cashback")
-                        .WithMany()
-                        .HasForeignKey("CashbackId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("Cashback_WebApi.Models.RevendedoraModel", "Revendedora")
                         .WithMany("Compras")
                         .HasForeignKey("CpfRevendedor");

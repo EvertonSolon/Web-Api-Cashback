@@ -4,12 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Cashback_WebApi.Models;
 using Cashback_WebApi.Service.Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cashback_WebApi.Controllers
 {
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class LoginController : ControllerBase
@@ -26,13 +28,17 @@ namespace Cashback_WebApi.Controllers
             _userManager = userManager;
         }
 
-        [HttpGet]
-        public ActionResult Login([FromBody]LoginDto login)
+        [HttpPost("")]
+        public ActionResult Login([FromBody]RevendedoraDto revendedoraDto)
         {
+            ModelState.Remove(nameof(revendedoraDto.NomeCompleto));
+            ModelState.Remove(nameof(revendedoraDto.CPF));
+            ModelState.Remove(nameof(revendedoraDto.ConfirmacaoSenha));
+
             if (!ModelState.IsValid)
                 return UnprocessableEntity(ModelState);
 
-            var revendedora = _revendedoraService.Obter(login.Email, login.Senha);
+            var revendedora = _revendedoraService.Obter(revendedoraDto.Email, revendedoraDto.Senha);
 
             if (revendedora == null)
                 return NotFound("Usuário(a) não localizado(a)!");
@@ -40,7 +46,6 @@ namespace Cashback_WebApi.Controllers
             _signInManager.SignInAsync(revendedora, false);
 
             return Ok();
-
         }
     }
 }

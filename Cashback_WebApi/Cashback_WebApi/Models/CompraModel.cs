@@ -25,11 +25,12 @@ namespace Cashback_WebApi.Models
         [ForeignKey("Revendedora")]
         public string CpfRevendedor { get; set; }
         public RevendedoraModel Revendedora { get; set; }
-        
 
-        [ForeignKey("Cashback")]
-        public int CashbackId { get; set; }
-        public virtual CashbackModel Cashback { get; set; }
+        public double Cashback { get; set; }
+
+        //[ForeignKey("Cashback")]
+        //public int CashbackId { get; set; }
+        //public virtual CashbackModel Cashback { get; set; }
 
 
     }

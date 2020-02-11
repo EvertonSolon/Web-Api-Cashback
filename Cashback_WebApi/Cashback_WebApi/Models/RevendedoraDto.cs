@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 
 namespace Cashback_WebApi.Models
 {
-    public class LoginDto
+    public class RevendedoraDto
     {
         [Required]
         public string NomeCompleto { get; set; }
+
+        [Required]
+        public string CPF { get; set; }
 
         [Required]
         [EmailAddress]
@@ -17,5 +20,9 @@ namespace Cashback_WebApi.Models
 
         [Required]
         public string Senha { get; set; }
+
+        [Required]
+        [Compare("Senha")]
+        public string ConfirmacaoSenha { get; set; }
     }
 }

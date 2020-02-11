@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Cashback_WebApi.Migrations
 {
-    public partial class BancoInicial : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -41,25 +41,13 @@ namespace Cashback_WebApi.Migrations
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
                     NomeCompleto = table.Column<string>(nullable: false),
-                    CPF = table.Column<string>(nullable: false)
+                    CPF = table.Column<string>(nullable: false),
+                    CriadoEm = table.Column<DateTime>(nullable: false),
+                    Excluido = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Cashbackes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Valor = table.Column<double>(nullable: false),
-                    CompraId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cashbackes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -108,8 +96,8 @@ namespace Cashback_WebApi.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(nullable: false),
-                    ProviderKey = table.Column<string>(nullable: false),
+                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
+                    ProviderKey = table.Column<string>(maxLength: 128, nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: false)
                 },
@@ -153,8 +141,8 @@ namespace Cashback_WebApi.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
-                    LoginProvider = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: false),
+                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
+                    Name = table.Column<string>(maxLength: 128, nullable: false),
                     Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -174,21 +162,17 @@ namespace Cashback_WebApi.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    CriadoEm = table.Column<DateTime>(nullable: false),
+                    Excluido = table.Column<bool>(nullable: false),
                     CodigoCompra = table.Column<string>(nullable: false),
                     Valor = table.Column<double>(nullable: false),
-                    Data = table.Column<DateTime>(nullable: false),
+                    DataCompra = table.Column<DateTime>(nullable: false),
                     CpfRevendedor = table.Column<string>(nullable: true),
-                    CashbackId = table.Column<int>(nullable: false)
+                    Cashback = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Compras", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Compras_Cashbackes_CashbackId",
-                        column: x => x.CashbackId,
-                        principalTable: "Cashbackes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Compras_AspNetUsers_CpfRevendedor",
                         column: x => x.CpfRevendedor,
@@ -235,11 +219,6 @@ namespace Cashback_WebApi.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Compras_CashbackId",
-                table: "Compras",
-                column: "CashbackId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Compras_CpfRevendedor",
                 table: "Compras",
                 column: "CpfRevendedor");
@@ -267,9 +246,6 @@ namespace Cashback_WebApi.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
-                name: "Cashbackes");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

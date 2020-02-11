@@ -63,7 +63,8 @@ namespace Cashback_WebApi.Repositories
             if (_userManager.CheckPasswordAsync(revendedora, senha).Result)
                 return revendedora;
 
-            throw new Exception("Revendedora(a) não localizado(a)!");
+            //throw new Exception("Revendedora(a) não localizado(a)!");
+            return null;
         }
 
         public void Atualizar(RevendedoraModel revendedora)
