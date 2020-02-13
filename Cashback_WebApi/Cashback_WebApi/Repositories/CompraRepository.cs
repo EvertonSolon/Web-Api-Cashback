@@ -31,7 +31,9 @@ namespace Cashback_WebApi.Repositories
 
         public ICollection<CompraModel> ObterTodos()
         {
-            throw new NotImplementedException();
+            var compras = _contexto.Compras.Where(x => x.Excluido == false).ToList();
+
+            return compras;
         }
 
         public CompraModel Obter(int id)

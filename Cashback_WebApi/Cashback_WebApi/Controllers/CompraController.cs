@@ -26,13 +26,6 @@ namespace Cashback_WebApi.Controllers
             _revendedoraService = revendedoraService;
         }
 
-        // GET: api/Compra
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
         // GET: api/Compra/5
         [HttpGet("{id}")]
         public string Get(int id)
@@ -40,8 +33,35 @@ namespace Cashback_WebApi.Controllers
             return "value";
         }
 
+        [HttpGet("todas")]
+        public ActionResult Todas()
+        {
+            var compras = _compraService.ObterTodos();
+
+            var jsonObjs = new List<object>();
+
+            foreach (var compra in compras.OrderByDescending(x => x.DataCompra))
+            {
+                var porcentagemCashback = (compra.Cashback / compra.Valor) * 100;
+
+                jsonObjs.Add(
+                    new
+                    {
+                        compra.CodigoCompra,
+                        compra.Valor,
+                        compra.DataCompra,
+                        PorcentagemCashback = string.Concat(porcentagemCashback, "%"),
+                        ValorCashback = compra.Cashback,
+                        compra.Status
+                    }
+                    );
+            }
+
+            return Ok(jsonObjs);
+        }
+
         [HttpGet("modelo")]
-        public ActionResult Model()
+        public ActionResult Modelo()
         {
             return Ok(new CompraDto());
         }
