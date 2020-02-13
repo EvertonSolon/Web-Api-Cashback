@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using Cashback_WebApi.Biblioteca.Constantes;
 using Cashback_WebApi.Models;
 using Cashback_WebApi.Service.Contracts;
 using Microsoft.AspNetCore.Authorization;
@@ -48,8 +50,6 @@ namespace Cashback_WebApi.Controllers
         [HttpPost]
         public ActionResult Post([FromBody] CompraDto compraDto)
         {
-            //ModelState.Remove(nameof(compraDto.Id));
-
             if (compraDto == null)
                 return BadRequest();
 
@@ -77,42 +77,56 @@ namespace Cashback_WebApi.Controllers
             return created;
         }
 
-        private static RevendedoraModel MapearRevendedora(RevendedoraModel revendedora)
-        {
-            return new RevendedoraModel
-            {
-                Id = revendedora.Id,
-                AccessFailedCount = revendedora.AccessFailedCount,
-                ConcurrencyStamp = revendedora.ConcurrencyStamp,
-                Cpf = revendedora.Cpf,
-                CriadoEm = revendedora.CriadoEm,
-                Email = revendedora.Email,
-                EmailConfirmed = revendedora.EmailConfirmed,
-                Excluido = revendedora.Excluido,
-                LockoutEnabled = revendedora.LockoutEnabled,
-                LockoutEnd = revendedora.LockoutEnd,
-                NomeCompleto = revendedora.NomeCompleto,
-                NormalizedEmail = revendedora.NormalizedEmail,
-                NormalizedUserName = revendedora.NormalizedUserName,
-                PasswordHash = revendedora.PasswordHash,
-                PhoneNumber = revendedora.PhoneNumber,
-                PhoneNumberConfirmed = revendedora.PhoneNumberConfirmed,
-                SecurityStamp = revendedora.SecurityStamp,
-                TwoFactorEnabled = revendedora.TwoFactorEnabled,
-                UserName = revendedora.UserName
-            };
-        }
-
         // PUT: api/Compra/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public ActionResult Put(int id, [FromBody] CompraDto compraDto)
         {
+            if (compraDto == null)
+                return BadRequest();
+
+            if (!ModelState.IsValid)
+                return UnprocessableEntity(ModelState);
+
+            var compra = _compraService.Obter(id);
+
+            if (compra == null)
+                return NotFound("Venda não encontrada!");
+
+            if (compra.Status == StatusCompraConstante.Aprovado)
+                return StatusCode(405, "Venda já aprovada!");
+
+            var revendedora = _revendedoraService.Obter(compraDto.CpfRevendedor);
+
+            if (revendedora == null)
+                return NotFound("Revendedor(a) não encontrado(a)!");
+
+            compra.CodigoCompra = compraDto.CodigoCompra;
+            compra.Valor = compraDto.Valor;
+            compra.DataCompra = compraDto.DataCompra;
+            compra.CpfRevendedor = compraDto.CpfRevendedor;
+
+            _compraService.Atualizar(compra);
+
+            return Ok(compra);
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(int id)
         {
+            var compra = _compraService.Obter(id);
+
+            if (compra == null)
+                return NotFound("Venda não encontrada!");
+
+            if (compra.Status == StatusCompraConstante.Aprovado)
+                return StatusCode(405, "Venda já aprovada!");
+
+            compra.Excluido = true;
+
+            _compraService.Atualizar(compra);
+
+            return NoContent();
         }
     }
 }

@@ -8,5 +8,6 @@ namespace Cashback_WebApi.Repositories.Contracts
 {
     public interface ICompraRepository : ICrudBaseRepository<CompraModel>
     {
+        CompraModel Obter(string codigoCompra);
     }
 }

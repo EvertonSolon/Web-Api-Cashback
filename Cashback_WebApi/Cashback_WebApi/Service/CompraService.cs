@@ -43,9 +43,17 @@ namespace Cashback_WebApi.Service
             return compra;
         }
 
+        public CompraModel Obter(string codigoCompra)
+        {
+            var compra = _compraRepository.Obter(codigoCompra);
+
+            return compra;
+        }
+        
         public void Atualizar(CompraModel compra)
         {
             _compraRepository.Atualizar(compra);
+                //return "Somente é possível atualizar vendas com status \"Em Validação\"";
         }
     }
 }

@@ -41,6 +41,13 @@ namespace Cashback_WebApi.Repositories
             return compra;
         }
 
+        public CompraModel Obter(string codigoCompra)
+        {
+            var compra = _contexto.Compras.FirstOrDefault(x => x.CodigoCompra == codigoCompra);
+
+            return compra;
+        }
+
         public void Atualizar(CompraModel compra)
         {
             _contexto.Compras.Update(compra);

@@ -17,7 +17,7 @@ namespace Cashback_WebApi.Models
         [Required]
         public DateTime DataCompra { get; set; }
 
-        [MinLength(11), MaxLength(14)]
+        [MaxLength(14)]
         public string CpfRevendedor { get; set; }
     }
 }
