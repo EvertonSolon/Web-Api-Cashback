@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Net.Http;
-using Cashback_WebApi.Helpers.Tests;
 using Newtonsoft.Json;
 
 namespace Cashback_WebApi.Controllers.Tests

@@ -1,4 +1,5 @@
-﻿using Cashback_WebApi.Helpers.Tests;
+﻿//using Cashback_WebApi.Helpers.Tests;
+using Cashback_WebApi.Helpers;
 using Cashback_WebApi.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -25,7 +26,7 @@ namespace Cashback_WebApi.Controllers.Tests
 
         public BaseControllerTest()
         {
-            _client = HttpClientHelper.GetClient();
+            _client = HttpClientHelper.GetClient_Local();
             var builder = new BuilderHelper();
             _emailAccesso = builder._configuration["API_Access:Email"];
             _senhaAccesso = builder._configuration["API_Access:Senha"];
