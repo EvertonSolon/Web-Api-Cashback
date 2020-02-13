@@ -66,7 +66,8 @@ namespace Cashback_WebApi.Controllers
                 CodigoCompra = compraDto.CodigoCompra,
                 CpfRevendedor = compraDto.CpfRevendedor,
                 DataCompra = compraDto.DataCompra,
-                Valor = compraDto.Valor
+                Valor = compraDto.Valor,
+                RevendedoraId = revendedora.Id
             };
 
             _compraService.Criar(compra);
