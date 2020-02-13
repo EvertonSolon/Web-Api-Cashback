@@ -4,34 +4,48 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Cashback_WebApi.Service.Contracts;
+using Cashback_WebApi.Repositories.Contracts;
+using Cashback_WebApi.Biblioteca.Constantes;
+using Microsoft.Extensions.Configuration;
 
 namespace Cashback_WebApi.Service
 {
     public class CompraService : ICompraService
     {
+        private readonly ICompraRepository _compraRepository;
+
+        public CompraService(ICompraRepository compraRepository)
+        {
+            _compraRepository = compraRepository;
+        }
+
         public void Criar(CompraModel compra)
         {
-            throw new NotImplementedException();
+            _compraRepository.Criar(compra);
         }
 
         public void Excluir(CompraModel compra)
         {
-            throw new NotImplementedException();
+            _compraRepository.Excluir(compra);
         }
 
         public ICollection<CompraModel> ObterTodos()
         {
-            throw new NotImplementedException();
+            var compras = _compraRepository.ObterTodos();
+
+            return compras;
         }
 
         public CompraModel Obter(int id)
         {
-            throw new NotImplementedException();
+            var compra = _compraRepository.Obter(id);
+
+            return compra;
         }
 
         public void Atualizar(CompraModel compra)
         {
-            throw new NotImplementedException();
+            _compraRepository.Atualizar(compra);
         }
     }
 }

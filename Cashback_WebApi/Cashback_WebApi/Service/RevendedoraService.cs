@@ -11,12 +11,10 @@ namespace Cashback_WebApi.Service
 {
     public class RevendedoraService : IRevendedoraService
     {
-        private readonly UserManager<RevendedoraModel> _userManager;
         private readonly IRevendedoraRepository _revendedoraRepository;
 
-        public RevendedoraService(UserManager<RevendedoraModel> userManager, IRevendedoraRepository revendedoraRepository)
+        public RevendedoraService(IRevendedoraRepository revendedoraRepository)
         {
-            _userManager = userManager;
             _revendedoraRepository = revendedoraRepository;
         }
 
@@ -51,6 +49,14 @@ namespace Cashback_WebApi.Service
         public RevendedoraModel Obter(int id)
         {
             var revendedora = _revendedoraRepository.Obter(id);
+
+            return revendedora;
+        }
+
+        public RevendedoraModel Obter(string cpf)
+        {
+            cpf = cpf.Replace(".", string.Empty).Replace("-", string.Empty);
+            var revendedora = _revendedoraRepository.Obter(cpf);
 
             return revendedora;
         }

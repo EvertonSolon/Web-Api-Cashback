@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cashback_WebApi.Migrations
 {
     [DbContext(typeof(CashbackContext))]
-    [Migration("20200211150135_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20200213013022_initialcreate")]
+    partial class initialcreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,13 +28,16 @@ namespace Cashback_WebApi.Migrations
                     b.Property<string>("CodigoCompra")
                         .IsRequired();
 
-                    b.Property<string>("CpfRevendedor");
+                    b.Property<string>("CpfRevendedor")
+                        .HasMaxLength(11);
 
                     b.Property<DateTime>("CriadoEm");
 
                     b.Property<DateTime>("DataCompra");
 
                     b.Property<bool>("Excluido");
+
+                    b.Property<string>("RevendedoraId");
 
                     b.Property<string>("Status")
                         .IsRequired();
@@ -43,7 +46,7 @@ namespace Cashback_WebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CpfRevendedor");
+                    b.HasIndex("RevendedoraId");
 
                     b.ToTable("Compras");
                 });
@@ -55,11 +58,12 @@ namespace Cashback_WebApi.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
-                    b.Property<string>("CPF")
-                        .IsRequired();
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
+
+                    b.Property<string>("Cpf")
+                        .IsRequired()
+                        .HasMaxLength(11);
 
                     b.Property<DateTime>("CriadoEm");
 
@@ -219,7 +223,7 @@ namespace Cashback_WebApi.Migrations
                 {
                     b.HasOne("Cashback_WebApi.Models.RevendedoraModel", "Revendedora")
                         .WithMany("Compras")
-                        .HasForeignKey("CpfRevendedor");
+                        .HasForeignKey("RevendedoraId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

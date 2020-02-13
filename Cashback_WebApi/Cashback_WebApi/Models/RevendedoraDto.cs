@@ -12,6 +12,7 @@ namespace Cashback_WebApi.Models
         public string NomeCompleto { get; set; }
 
         [Required]
+
         public string CPF { get; set; }
 
         [Required]

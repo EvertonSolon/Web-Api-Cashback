@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Cashback_WebApi.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class initialcreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -41,7 +41,7 @@ namespace Cashback_WebApi.Migrations
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
                     NomeCompleto = table.Column<string>(nullable: false),
-                    CPF = table.Column<string>(nullable: false),
+                    Cpf = table.Column<string>(maxLength: 11, nullable: false),
                     CriadoEm = table.Column<DateTime>(nullable: false),
                     Excluido = table.Column<bool>(nullable: false)
                 },
@@ -168,15 +168,16 @@ namespace Cashback_WebApi.Migrations
                     Valor = table.Column<double>(nullable: false),
                     DataCompra = table.Column<DateTime>(nullable: false),
                     Status = table.Column<string>(nullable: false),
-                    CpfRevendedor = table.Column<string>(nullable: true),
+                    CpfRevendedor = table.Column<string>(maxLength: 11, nullable: true),
+                    RevendedoraId = table.Column<string>(nullable: true),
                     Cashback = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Compras", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Compras_AspNetUsers_CpfRevendedor",
-                        column: x => x.CpfRevendedor,
+                        name: "FK_Compras_AspNetUsers_RevendedoraId",
+                        column: x => x.RevendedoraId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -220,9 +221,9 @@ namespace Cashback_WebApi.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Compras_CpfRevendedor",
+                name: "IX_Compras_RevendedoraId",
                 table: "Compras",
-                column: "CpfRevendedor");
+                column: "RevendedoraId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

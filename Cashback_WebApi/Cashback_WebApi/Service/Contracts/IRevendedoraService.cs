@@ -10,6 +10,7 @@ namespace Cashback_WebApi.Service.Contracts
     public interface IRevendedoraService : ICrudBaseService<RevendedoraModel>
     {
         IdentityResult Criar(RevendedoraModel revendedora, string senha);
+        RevendedoraModel Obter(string cpf);
         RevendedoraModel Obter(string email, string password);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Cashback_WebApi.Models;
 using Cashback_WebApi.Repositories.Contracts;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,6 +46,13 @@ namespace Cashback_WebApi.Repositories
             throw new NotImplementedException();
         }
 
+        public RevendedoraModel Obter(string cpf)
+        {
+            var revendedora = _userManager.Users.AsNoTracking().FirstOrDefault(x => x.Cpf == cpf);
+
+            return revendedora;
+        }
+
         public RevendedoraModel Obter(string email, string senha)
         {
             var revendedora = _userManager.FindByEmailAsync(email).Result;
@@ -57,7 +65,7 @@ namespace Cashback_WebApi.Repositories
 
         public void Atualizar(RevendedoraModel revendedora)
         {
-            throw new NotImplementedException();
+            _userManager.UpdateAsync(revendedora);
         }
     }
 }

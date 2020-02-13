@@ -51,6 +51,9 @@ namespace Cashback_WebApi
             services.AddScoped<IRevendedoraService, RevendedoraService>();
             services.AddScoped<IRevendedoraRepository, RevendedoraRepository>();
 
+            services.AddScoped<ICompraService, CompraService>();
+            services.AddScoped<ICompraRepository, CompraRepository>();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddJsonOptions(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);

@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Cashback_WebApi.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class RevendedorController : ControllerBase
@@ -50,7 +49,7 @@ namespace Cashback_WebApi.Controllers
             var user = new RevendedoraModel
             {
                 NomeCompleto = revendedoraDto.NomeCompleto,
-                CPF = revendedoraDto.CPF,
+                Cpf = revendedoraDto.CPF,
                 Email = revendedoraDto.Email,
                 UserName = revendedoraDto.Email
             };
@@ -71,12 +70,14 @@ namespace Cashback_WebApi.Controllers
         }
 
         // PUT: api/Revendedor/5
+        [Authorize]
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
         // DELETE: api/ApiWithActions/5
+        [Authorize]
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

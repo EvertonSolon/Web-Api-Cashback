@@ -10,6 +10,7 @@ namespace Cashback_WebApi.Repositories.Contracts
     public interface IRevendedoraRepository : ICrudBaseRepository<RevendedoraModel>
     {
         IdentityResult Criar(RevendedoraModel revendedora, string senha);
+        RevendedoraModel Obter(string cpf);
         RevendedoraModel Obter(string email, string senha);
     }
 }

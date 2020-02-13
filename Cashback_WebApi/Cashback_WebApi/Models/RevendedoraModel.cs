@@ -13,15 +13,25 @@ namespace Cashback_WebApi.Models
         [Required]
         [ProtectedPersonalData]
         public string NomeCompleto { get; set; }
+        
+        private string cpf;
 
         [Required]
-        public string CPF { get; set; }
+        [MaxLength(11)]
+        public string Cpf
+        {
+            get { return cpf; }
+            set
+            {
+                cpf = value.Replace(".", string.Empty).Replace("-", string.Empty);
+            }
+        }
 
-        public DateTime CriadoEm { get; set; }
+        public DateTime CriadoEm { get; set; } = DateTime.Now;
 
-        public bool Excluido { get; set; }
+        public bool Excluido { get; set; } = false;
 
-        [ForeignKey("CpfRevendedor")]
+        [ForeignKey("RevendedoraId")]
         public virtual ICollection<CompraModel> Compras { get; set; }
     }
 }

@@ -9,8 +9,8 @@ namespace Cashback_WebApi.Models
     {
         public int Id { get; set; }
 
-        public DateTime CriadoEm { get; set; }
+        public DateTime CriadoEm { get; set; } = DateTime.Now;
 
-        public bool Excluido { get; set; }
+        public bool Excluido { get; set; } = false;
     }
 }
