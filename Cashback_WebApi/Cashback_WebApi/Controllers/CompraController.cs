@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Cashback_WebApi.Controllers
 {
-    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CompraController : ControllerBase
@@ -29,14 +28,10 @@ namespace Cashback_WebApi.Controllers
             _apiClient = apiClient;
         }
 
+        //[Authorize]
         [HttpGet("acumuladocashback")]
         public ActionResult AcumuladoCashback()
         {
-            //_apiClient.Autenticar();
-
-            //if (!_apiClient.AutenticadoComToken)
-            //    return Unauthorized();
-
             var resultado = _apiClient.Obter_AcumuladoCashback();
 
             if (resultado == null)
@@ -51,6 +46,7 @@ namespace Cashback_WebApi.Controllers
             return Ok(new CompraDto());
         }
 
+        [Authorize]
         // POST: api/Compra
         [HttpPost]
         public ActionResult Post([FromBody] CompraDto compraDto)
@@ -82,6 +78,7 @@ namespace Cashback_WebApi.Controllers
             return created;
         }
 
+        [Authorize]
         // PUT: api/Compra/5
         [HttpPut("{id}")]
         public ActionResult Put(int id, [FromBody] CompraDto compraDto)
@@ -115,6 +112,7 @@ namespace Cashback_WebApi.Controllers
             return Ok(compra);
         }
 
+        [Authorize]
         [HttpGet("todas")]
         public ActionResult Todas()
         {
@@ -142,6 +140,7 @@ namespace Cashback_WebApi.Controllers
             return Ok(jsonObjs);
         }
 
+        [Authorize]
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)

@@ -1,11 +1,15 @@
 ﻿//using Cashback_WebApi.Helpers.Tests;
+using Cashback_WebApi.Extensoes;
 using Cashback_WebApi.Helpers;
 using Cashback_WebApi.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
+using Polly;
+using Polly.Retry;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 
@@ -18,6 +22,7 @@ namespace Cashback_WebApi.Controllers.Tests
         protected string _emailAccesso;
         protected string _senhaAccesso;
         protected HttpResponseMessage _responseMessage;
+        private RetryPolicy<HttpResponseMessage> _jwtPolicy;
 
         public bool IsAuthenticatedUsingToken
         {
@@ -30,6 +35,11 @@ namespace Cashback_WebApi.Controllers.Tests
             var builder = new BuilderHelper();
             _emailAccesso = builder._configuration["API_Access:Email"];
             _senhaAccesso = builder._configuration["API_Access:Senha"];
+        }
+
+        public bool AutenticadoComToken
+        {
+            get => _token?.Autenticado ?? false;
         }
 
         public void Autenticar()
@@ -51,6 +61,48 @@ namespace Cashback_WebApi.Controllers.Tests
                 _token = JsonConvert.DeserializeObject<TokenModel>(conteudo);
             else
                 _token = null;
+        }
+
+        public AcumuladoCashback Obter_AcumuladoCashback()
+        {
+            var acumuladoCashback = new AcumuladoCashback();
+
+            //ExecuteWithToken é um método de extensão que está na classe RetryPolicyExtensions, em Cashback_WebApi.Extensoes.
+            var response = _jwtPolicy.ExecuteWithToken(_token, context =>
+            {
+                var requestMessage = new HttpRequestMessage(HttpMethod.Get, "");
+
+                requestMessage.Headers.Add("Authorization", $"Bearer {context["AccessToken"]}");
+
+                var responseMessage = _client.SendAsync(requestMessage).Result;
+
+                return responseMessage;
+
+            });
+
+            if (response.IsSuccessStatusCode)
+            {
+                string conteudo = response.Content.ReadAsStringAsync().Result;
+                acumuladoCashback = JsonConvert.DeserializeObject<AcumuladoCashback>(conteudo);
+            }
+
+            return acumuladoCashback;
+        }
+
+        private RetryPolicy<HttpResponseMessage> CreateAccessTokenPolicy()
+        {
+            var policy = Policy.HandleResult<HttpResponseMessage>(
+                            message => message.StatusCode == HttpStatusCode.Unauthorized)
+                            .Retry(1, (message, retryCount, context) =>
+                            {
+                                Autenticar();
+                                if (!(_token?.Autenticado ?? false))
+                                    throw new InvalidOperationException("Token inválido!");
+
+                                context["AccessToken"] = _token.Autenticado;
+                            });
+
+            return policy;
         }
     }
 }

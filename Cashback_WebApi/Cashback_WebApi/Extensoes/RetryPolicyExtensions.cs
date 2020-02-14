@@ -14,11 +14,13 @@ namespace Cashback_WebApi.Extensoes
         public static HttpResponseMessage ExecuteWithToken(this RetryPolicy<HttpResponseMessage> retryPolicy,
             TokenModel token, Func<Context, HttpResponseMessage> action)
         {
-            return retryPolicy.Execute(action,
+            var retryPolicy_ = retryPolicy.Execute(action,
                 new Dictionary<string, object>
                 {
                     { "AccessToken", token.Token }
                 });
+
+            return retryPolicy_;
         }
     }
 }

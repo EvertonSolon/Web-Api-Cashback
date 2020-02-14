@@ -29,6 +29,15 @@ namespace Cashback_WebApi.Controllers.Tests
         }
 
         [TestMethod()]
+        public void LoginTest_Obter_Token_Sucesso()
+        {
+            Autenticar();
+
+            Assert.IsTrue(AutenticadoComToken);
+
+        }
+
+        [TestMethod()]
         public void LoginTest_Com_Usuario_Incorreto_Falha()
         {
             var requestMessage = new HttpRequestMessage(HttpMethod.Post, "login");
