@@ -30,7 +30,6 @@ namespace Cashback_WebApi.Controllers.Tests
                     var requestMessage = new HttpRequestMessage(HttpMethod.Get, "compra/todas");
 
                     requestMessage.Headers.Add("Authorization", $"Bearer {context["AccessToken"]}");
-                    //requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", context["AccessToken"].ToString());
 
                     var responseMessage = _client.SendAsync(requestMessage).Result;
 
