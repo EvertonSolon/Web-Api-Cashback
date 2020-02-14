@@ -7,11 +7,25 @@ using System.Threading.Tasks;
 
 namespace Cashback_WebApi.Helpers
 {
-    public class HttpClientHelper
+    public static class HttpClientHelper
     {
         public static HttpClient GetClient_Local()
         {
-            var uriApi = new BuilderHelper()._configuration["API_Access:UrlBase"];
+            var client = GerarClient("API_Access:UrlBase");
+
+            return client;
+        }
+
+        public static HttpClient GetClient_ApiAcumuladoCashback()
+        {
+            var client = GerarClient("API_AcumuladoCashBack:Url");
+
+            return client;
+        }
+
+        private static HttpClient GerarClient(string appSettgins)
+        {
+            var uriApi = new BuilderHelper()._configuration[appSettgins];
 
             var client = new HttpClient
             {
@@ -23,21 +37,5 @@ namespace Cashback_WebApi.Helpers
 
             return client;
         }
-
-        public static HttpClient GetClient_ApiAcumuladoCashback()
-        {
-            var uriApiWord = new BuilderHelper()._configuration["API_AcumuladoCashback:Url"];
-
-            var client = new HttpClient
-            {
-                BaseAddress = new Uri(uriApiWord)
-            };
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept
-                .Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            return client;
-        }
-
     }
 }

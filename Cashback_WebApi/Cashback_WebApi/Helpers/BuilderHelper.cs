@@ -16,9 +16,10 @@ namespace Cashback_WebApi.Helpers
 
             var builder = new ConfigurationBuilder()
                             .SetBasePath(location)
-                            .AddJsonFile("appsettings.json");
+                            .AddJsonFile("appsettings.json", optional: false)
+                            .Build();
 
-            _configuration = builder.Build();
+            _configuration = builder;
         }
     }
 }

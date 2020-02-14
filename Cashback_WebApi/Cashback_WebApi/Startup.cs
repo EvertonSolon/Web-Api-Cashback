@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Cashback_WebApi.ApiClients;
 using Cashback_WebApi.Database;
 using Cashback_WebApi.Models;
 using Cashback_WebApi.Repositories;
@@ -53,6 +54,8 @@ namespace Cashback_WebApi
 
             services.AddScoped<ICompraService, CompraService>();
             services.AddScoped<ICompraRepository, CompraRepository>();
+
+            services.AddScoped<ApiClient>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddJsonOptions(options =>

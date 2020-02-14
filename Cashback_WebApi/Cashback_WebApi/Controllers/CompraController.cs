@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Cashback_WebApi.ApiClients;
 using Cashback_WebApi.Biblioteca.Constantes;
 using Cashback_WebApi.Models;
 using Cashback_WebApi.Service.Contracts;
@@ -19,45 +20,29 @@ namespace Cashback_WebApi.Controllers
     {
         private readonly ICompraService _compraService;
         private readonly IRevendedoraService _revendedoraService;
+        private readonly ApiClient _apiClient;
 
-        public CompraController(ICompraService compraService, IRevendedoraService revendedoraService)
+        public CompraController(ICompraService compraService, IRevendedoraService revendedoraService, ApiClient apiClient)
         {
             _compraService = compraService;
             _revendedoraService = revendedoraService;
+            _apiClient = apiClient;
         }
 
-        // GET: api/Compra/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("acumuladocashback")]
+        public ActionResult AcumuladoCashback()
         {
-            return "value";
-        }
+            //_apiClient.Autenticar();
 
-        [HttpGet("todas")]
-        public ActionResult Todas()
-        {
-            var compras = _compraService.ObterTodos();
+            //if (!_apiClient.AutenticadoComToken)
+            //    return Unauthorized();
 
-            var jsonObjs = new List<object>();
+            var resultado = _apiClient.Obter_AcumuladoCashback();
 
-            foreach (var compra in compras.OrderByDescending(x => x.DataCompra))
-            {
-                var porcentagemCashback = (compra.Cashback / compra.Valor) * 100;
+            if (resultado == null)
+                return NotFound();
 
-                jsonObjs.Add(
-                    new
-                    {
-                        compra.CodigoCompra,
-                        compra.Valor,
-                        compra.DataCompra,
-                        PorcentagemCashback = string.Concat(porcentagemCashback, "%"),
-                        ValorCashback = compra.Cashback,
-                        compra.Status
-                    }
-                    );
-            }
-
-            return Ok(jsonObjs);
+            return Ok(resultado);
         }
 
         [HttpGet("modelo")]
@@ -128,6 +113,33 @@ namespace Cashback_WebApi.Controllers
             _compraService.Atualizar(compra);
 
             return Ok(compra);
+        }
+
+        [HttpGet("todas")]
+        public ActionResult Todas()
+        {
+            var compras = _compraService.ObterTodos();
+
+            var jsonObjs = new List<object>();
+
+            foreach (var compra in compras.OrderByDescending(x => x.DataCompra))
+            {
+                var porcentagemCashback = (compra.Cashback / compra.Valor) * 100;
+
+                jsonObjs.Add(
+                    new
+                    {
+                        compra.CodigoCompra,
+                        compra.Valor,
+                        compra.DataCompra,
+                        PorcentagemCashback = string.Concat(porcentagemCashback, "%"),
+                        ValorCashback = compra.Cashback,
+                        compra.Status
+                    }
+                    );
+            }
+
+            return Ok(jsonObjs);
         }
 
         // DELETE: api/ApiWithActions/5
