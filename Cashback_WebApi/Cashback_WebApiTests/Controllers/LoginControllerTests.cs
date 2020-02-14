@@ -12,7 +12,7 @@ namespace Cashback_WebApi.Controllers.Tests
     public class LoginControllerTests : BaseTest
     {
         [TestMethod()]
-        public void LoginTest_Sucesso()
+        public void Login_Sucesso_Test()
         {
             var requestMessage = new HttpRequestMessage(HttpMethod.Post, "login");
             requestMessage.Content = new StringContent(
@@ -29,7 +29,7 @@ namespace Cashback_WebApi.Controllers.Tests
         }
 
         [TestMethod()]
-        public void LoginTest_Obter_Token_Sucesso()
+        public void Login_Obter_Token_Sucesso_Test()
         {
             Autenticar();
 
@@ -37,7 +37,7 @@ namespace Cashback_WebApi.Controllers.Tests
         }
 
         [TestMethod()]
-        public void LoginTest_Com_Usuario_Incorreto_Falha()
+        public void Login_Com_Usuario_Incorreto_Falha_Test()
         {
             var requestMessage = new HttpRequestMessage(HttpMethod.Post, "login");
             requestMessage.Content = new StringContent(

@@ -32,7 +32,7 @@ namespace Cashback_WebApi.Models
             get { return valor; }
             set
             {
-                cashback =  CalcularCashBack(value);
+                Cashback =  CalcularCashBack(value);
                 valor = value;
             }
         }
@@ -59,12 +59,12 @@ namespace Cashback_WebApi.Models
         public string RevendedoraId { get; set; }
         public RevendedoraModel Revendedora { get; set; }
 
-        private double cashback;
-        public double Cashback
-        {
-            get { return cashback; }
-            set { cashback = CalcularCashBack(value); }
-        }
+        //private double cashback;
+        public double Cashback { get; set; }
+        //{
+        //    get { return cashback; }
+        //    set { cashback = CalcularCashBack(value); }
+        //}
 
         private double CalcularCashBack(double valor)
         {
