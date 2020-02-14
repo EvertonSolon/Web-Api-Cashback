@@ -4,28 +4,48 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Cashback_WebApi.ApiClients;
+using Cashback_WebApi.Extensoes;
+using Newtonsoft.Json;
+using Cashback_WebApi.Models;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace Cashback_WebApi.Controllers.Tests
 {
     [TestClass()]
-    public class CompraControllerTests
+    public class CompraControllerTests : BaseTest
     {
-        private readonly ApiClient _apiClient;
-
-        public CompraControllerTests()
+        [TestMethod()]
+        public void TodasTest()
         {
-            _apiClient = new ApiClient();
+            Autenticar();
+
+            List<CompraModel> compras = null;
+
+            if (AutenticadoComToken)
+            {
+                //ExecuteWithToken é um método de extensão que está na classe RetryPolicyExtensions, em Cashback_WebApi.Extensoes.
+                var response = _jwtPolicy.ExecuteWithToken(_token, context =>
+                {
+                    var requestMessage = new HttpRequestMessage(HttpMethod.Get, "compra/todas");
+
+                    requestMessage.Headers.Add("Authorization", $"Bearer {context["AccessToken"]}");
+                    //requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", context["AccessToken"].ToString());
+
+                    var responseMessage = _client.SendAsync(requestMessage).Result;
+
+                    return responseMessage;
+
+                });
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var conteudo = response.Content.ReadAsStringAsync().Result;
+                    compras = JsonConvert.DeserializeObject<List<CompraModel>>(conteudo);
+                }
+            }
+
+            Assert.IsNotNull(compras);
         }
-
-        //[TestMethod()]
-        //public void TodasTest()
-        //{
-        //    _apiClient.Autenticar();
-
-        //    if (!_apiClient.AutenticadoComToken)
-        //        return Unauthorized();
-
-        //    Assert.Fail();
-        //}
     }
 }

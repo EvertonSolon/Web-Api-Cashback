@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 namespace Cashback_WebApi.Controllers.Tests
 {
     [TestClass()]
-    public class LoginControllerTests : BaseControllerTest
+    public class LoginControllerTests : BaseTest
     {
         [TestMethod()]
         public void LoginTest_Sucesso()
@@ -34,7 +34,6 @@ namespace Cashback_WebApi.Controllers.Tests
             Autenticar();
 
             Assert.IsTrue(AutenticadoComToken);
-
         }
 
         [TestMethod()]

@@ -11,6 +11,5 @@ namespace Cashback_WebApi.Models
         public string Criado { get; set; }
         public string Expiracao { get; set; }
         public string Token { get; set; }
-        public string Messagem { get; set; }
     }
 }

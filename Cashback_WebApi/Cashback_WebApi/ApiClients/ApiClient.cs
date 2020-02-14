@@ -25,11 +25,11 @@ namespace Cashback_WebApi.ApiClients
 
         public AcumuladoCashback Obter_AcumuladoCashback()
         {
-            var acumuladoCashback = new AcumuladoCashback();
-
             var requestMessage = new HttpRequestMessage(HttpMethod.Get, "");
 
             var responseMessage = _client.SendAsync(requestMessage).Result;
+
+            var acumuladoCashback = new AcumuladoCashback();
 
             if (responseMessage.IsSuccessStatusCode)
             {

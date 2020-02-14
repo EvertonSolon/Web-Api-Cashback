@@ -63,7 +63,10 @@ namespace Cashback_WebApi.Controllers
 
             var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
 
-            return new { token = tokenString, expiracao = exp };
+            return new { token = tokenString, 
+                         expiracao = exp, 
+                         autenticado = true ,
+                         criado = DateTime.Now};
         }
     }
 }

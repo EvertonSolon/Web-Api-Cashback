@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 namespace Cashback_WebApi.Controllers.Tests
 {
     [TestClass()]
-    public class RevendedorControllerTests : BaseControllerTest
+    public class RevendedorControllerTests : BaseTest
     {
         [TestMethod()]
         public void GetTest()

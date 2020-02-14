@@ -15,26 +15,28 @@ using System.Text;
 
 namespace Cashback_WebApi.Controllers.Tests
 {
-    public class BaseControllerTest
+    public class BaseTest
     {
         protected HttpClient _client;
         protected TokenModel _token;
         protected string _emailAccesso;
         protected string _senhaAccesso;
         protected HttpResponseMessage _responseMessage;
-        private RetryPolicy<HttpResponseMessage> _jwtPolicy;
+        protected RetryPolicy<HttpResponseMessage> _jwtPolicy;
 
         public bool IsAuthenticatedUsingToken
         {
             get => _token?.Autenticado ?? false;
         }
 
-        public BaseControllerTest()
+        public BaseTest()
         {
-            _client = HttpClientHelper.GetClient_Local();
             var builder = new BuilderHelper();
+
+            _client = HttpClientHelper.GetClient_Local();
             _emailAccesso = builder._configuration["API_Access:Email"];
             _senhaAccesso = builder._configuration["API_Access:Senha"];
+            _jwtPolicy = CreateAccessTokenPolicy();
         }
 
         public bool AutenticadoComToken
